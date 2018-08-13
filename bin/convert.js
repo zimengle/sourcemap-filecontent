@@ -13,16 +13,16 @@ function checkArgument(arg, name) {
 
 program
     .version(version)
-    .arguments('<sourcemapFile> <output>')
-    .action(function (sourcemapFile, output) {
+    .arguments('<base64File> <sourcemapFile>')
+    .action(function (base64File, sourcemapFile) {
+        base64FileValue = base64File;
         sourcemapFileValue = sourcemapFile;
-        outputValue = output;
     });
 
 
 program.parse(process.argv);
 
+checkArgument('base64FileValue', 'base64File');
 checkArgument('sourcemapFileValue', 'sourcemapFile');
-checkArgument('outputValue', 'output');
 
-require('../main').outputFileContent(path.resolve(process.cwd(), sourcemapFileValue), path.resolve(process.cwd(), outputValue));
+require('../main').convertBase64(path.resolve(process.cwd(), base64FileValue), path.resolve(process.cwd(), sourcemapFileValue));
